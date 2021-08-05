@@ -1,0 +1,53 @@
+<?php
+
+/**
+ * Add code in head section
+ */
+/**
+ *  Implements hook_page_attachments().
+ */
+    
+
+function google_analytics_code_page_attachments(array &$page) {
+
+    $config = \Drupal::config('google_analytics_code.settings');
+    $google_tracking_code = $config->get('google_tracking_code');
+    $google_analytics_code_enabled = $config->get('google_analytics_code_enabled');
+    $google_tracking_code_show_in = $config->get('google_tracking_code_show_in');
+    
+    if ($google_tracking_code_show_in == 0 && $google_analytics_code_enabled == 1) {
+        $page['#attached']['html_head'][] = [
+            // The data.
+            [
+            '#type' => 'html_tag',
+            // The HTML tag to add, in this case a  tag.
+            '#tag' => 'script',
+            // The value of the HTML tag, here we want to end up with
+            '#value' => $google_tracking_code,
+            // Set attributes like src to load a file.
+            '#attributes' => array('type' => 'text/javascript','id' => 'google-analytics-code-script'),
+            ],
+            'google-analytics-code-script',
+        ];
+    }
+    if ($google_tracking_code_show_in == 1 && $google_analytics_code_enabled == 1) {
+        /**
+         * Implements hook_page_bottom().
+         *
+         * Add scripts before the Footer tag
+         */
+        function google_analytics_code_page_bottom(array &$page_bottom) {
+            $config = \Drupal::config('google_analytics_code.settings');
+            $google_tracking_code = $config->get('google_tracking_code');
+
+            $page_bottom['GA_footer'] = [
+                '#type'  => 'html_tag',
+                '#tag' => 'script',
+                // The value of the HTML tag, here we want to end up with
+                '#value' => $google_tracking_code,
+                // Set attributes like src to load a file.
+                '#attributes' => array('type' => 'text/javascript','id' => 'google-analytics-code-script'),
+            ];
+        }
+    }
+}
