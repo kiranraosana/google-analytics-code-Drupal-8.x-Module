@@ -1,0 +1,4 @@
+google_analytics_code.settings:
+ title: 'Google Analytics Code'
+ route_name: google_analytics_code.settings
+ base_route: google_analytics_code.settings

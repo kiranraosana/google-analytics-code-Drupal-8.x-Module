@@ -1,0 +1,5 @@
+google_analytics_code.settings:
+ title: 'Google Analytics Code'
+ description: 'Configure the settings for Google Analytics Code.'
+ parent: system.admin_config_services
+ route_name: google_analytics_code.settings
